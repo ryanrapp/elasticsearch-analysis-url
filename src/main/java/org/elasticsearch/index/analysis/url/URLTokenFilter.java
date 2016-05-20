@@ -98,6 +98,9 @@ public final class URLTokenFilter extends TokenFilter {
             }
         }
         clearAttributes();
+        if(!iterator.hasNext()) {
+            return false;
+        }
         String next = iterator.next();
         if (allowMalformed) {
             next = parseMalformed(next);

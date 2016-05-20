@@ -12,6 +12,7 @@ import java.net.MalformedURLException;
 
 public class URLTokenFilterTest extends BaseTokenStreamTestCase {
     public static final String TEST_HTTP_URL = "http://www.foo.bar.com:9200/index_name/type_name/_search.html?foo=bar&baz=bat#tag";
+    public static final String TEST_HTTP_URL2 = "http://www.foo.bar.com";
     public static final String TEST_HTTPS_URL = "https://www.foo.bar.com:9200/index_name/type_name/_search.html?foo=bar&baz=bat#tag";
 
     @Test
@@ -36,6 +37,7 @@ public class URLTokenFilterTest extends BaseTokenStreamTestCase {
     @Test
     public void testFilterPath() throws IOException {
         assertTokenStreamContents(createFilter(TEST_HTTP_URL, URLPart.PATH).setTokenizePath(false), "/index_name/type_name/_search.html");
+        assertTokenStreamContents(createFilter(TEST_HTTP_URL2, URLPart.PATH).setTokenizePath(false));
     }
 
     @Test
@@ -102,5 +104,8 @@ public class URLTokenFilterTest extends BaseTokenStreamTestCase {
 
     private static void assertTokenStreamContents(TokenStream in, String output) throws IOException {
         assertTokenStreamContents(in, new String[]{output});
+    }
+    private static void assertTokenStreamContents(TokenStream in) throws IOException {
+        assertTokenStreamContents(in, new String[]{});
     }
 }
